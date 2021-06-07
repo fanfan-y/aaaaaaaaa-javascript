@@ -22,7 +22,7 @@ console.log(Number([])) // 0
 console.log(Number([1, 2])) // NaN
 
 
-console.log('---------分割-------')
+console.log('---------分割-------');
 
 // 方法二: +
 

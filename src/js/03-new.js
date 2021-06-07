@@ -21,11 +21,11 @@ Person.prototype.eat = function() {
     console.log('-----eat----', this.name)
 }
 
-const person = new Person('zhangsan', 19)
+const person = new Person("zhangsan", 19)
 console.log(person.address)
 console.log(person instanceof Person)
 
-console.log('-----------分割线-------')
+   console.log('-----------分割线-------');
 
 // 新的改写函数
 function newFn(name, age) {
