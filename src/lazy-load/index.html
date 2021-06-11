@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+
+ <style>
+     *{
+         margin: 0;
+         padding: 0;
+     }
+
+     .img{
+         width: 200px;
+         height: 200px;
+         background-color: grey;
+     }
+
+     .pic{
+
+     }
+
+     
+   
+
+ </style>
+
+ 
+</head>
+<body>
+<div class="container">
+    <div class="img">
+        <img data-src="./images/1.webp" alt="加载中" class="pic">
+    </div>
+    <div class="img">
+        <img data-src="./images/2.webp" alt="加载中" class="pic">
+    </div>
+    <div class="img">
+        <img data-src="./images/3.webp" alt="加载中" class="pic">
+    </div>
+    <div class="img">
+        <img data-src="./images/4.webp" alt="加载中" class="pic">
+    </div>
+    <div class="img">
+        <img data-src="./images/5.webp" alt="加载中" class="pic">
+    </div>
+    <div class="img">
+        <img data-src="./images/6.webp" alt="加载中" class="pic">
+    </div>
+    <div class="img">
+        <img data-src="./images/7.webp" alt="加载中" class="pic">
+    </div>
+    <div class="img">
+        <img data-src="./images/8.webp" alt="加载中" class="pic">
+    </div>
+    <div class="img">
+        <img data-src="./images/9.webp" alt="加载中" class="pic">
+    </div>
+    <div class="img">
+        <img data-src="./images/10.webp" alt="加载中" class="pic">
+    </div>
+    
+</div>
+
+<script>
+    const imgs = document.getElementsByTagName('img')
+    // 可视区域的高度
+    const viewHeight = document.innerHeight || document.documentElement.clientHeight
+
+    let num = 0
+
+    function lazyload() {
+        for (let i=num; i<imgs.length; i++) {
+            let distance = viewHeight - imgs[i].getBoundingClientRect().top
+            if(distance >= 0) {
+                imgs[i].src = imgs[i].getAttribute('data-src')
+                // 加载前i张，滚动再加载下一页
+                num = i + 1
+            }
+        }
+    }
+    lazyload()
+
+    window.addEventListener('scroll', lazyload, false)
+    window.addEventListener('resize', function() {
+        console.log('-------窗口大小改变了--------')
+    })
+</script>
+   
+</body>
+</html>
