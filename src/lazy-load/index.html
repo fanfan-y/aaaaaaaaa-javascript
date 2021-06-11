@@ -65,28 +65,58 @@
 </div>
 
 <script>
-    const imgs = document.getElementsByTagName('img')
-    // 可视区域的高度
-    const viewHeight = document.innerHeight || document.documentElement.clientHeight
-
-    let num = 0
-
     function lazyload() {
-        for (let i=num; i<imgs.length; i++) {
-            let distance = viewHeight - imgs[i].getBoundingClientRect().top
-            if(distance >= 0) {
+        const imgs = document.getElementsByTagName('img')
+        let num = 0
+        // 可视窗口的高度，在当代浏览器中使用window.innerHeight获取，在低版本的ie浏览器中使用document.documentElement.clientHeight获取
+        const viewHeight = window.innerHeight || document.documentElement.clientHeight
+
+        for (let i = num; i < imgs.length; i++) {
+            const top = imgs[i].getBoundingClientRect().top
+            if (viewHeight - top > 0) {
                 imgs[i].src = imgs[i].getAttribute('data-src')
-                // 加载前i张，滚动再加载下一页
                 num = i + 1
             }
         }
     }
-    lazyload()
 
-    window.addEventListener('scroll', lazyload, false)
-    window.addEventListener('resize', function() {
-        console.log('-------窗口大小改变了--------')
-    })
+    // lazyload()
+    // window.addEventListener('scroll', lazyload, false)
+
+
+function debounce(fn, delay) {
+    let timer = null 
+    return function(...args){
+        const context = this
+        if (timer) { 
+            // 再次触发时，如果定时器时间没到，就取消定时器的执行
+            clearTimeout(timer)
+        }
+        timer = setTimeout(function() {
+            console.log('-------d-----')
+            fn.call(context, ...args)
+        }, delay)
+    }
+}
+
+function throttle(fn, interval) {
+    let last = 0
+    
+    return function(...args) {
+        let now = +new Date() // 转换为时间戳
+        if (now - last > interval) {
+            console.log('-------d-----')
+            fn.call(this, ...args)
+            last = now
+        }
+    }
+}
+
+
+    const throttleLazyload = throttle(lazyload, 2000)
+    window.addEventListener('scroll', throttleLazyload, false)
+    
+   
 </script>
    
 </body>
